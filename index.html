@@ -8,11 +8,36 @@
     body { font-family: system-ui, sans-serif; margin: 24px; color: #111; }
     h1 { font-size: 1.4rem; margin: 0 0 8px; }
     h2 { font-size: 1.15rem; margin: 32px 0 12px; }
-    p { color: #444; font-size: 0.9rem; max-width: 50rem; }
+    p { color: #444; font-size: 0.9rem; max-width: 52rem; }
+    .note {
+      max-width: 52rem;
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      background: #f4f7fb;
+      border: 1px solid #d5dde8;
+      border-left: 4px solid #0e7c6b;
+      font-size: 0.88rem;
+      color: #333;
+      line-height: 1.45;
+    }
+    .note strong { color: #0f1c2e; }
+    .note code { font-size: 0.85em; background: #e8eef5; padding: 0.1rem 0.3rem; border-radius: 3px; }
+    .example {
+      max-width: 52rem;
+      margin: 0 0 16px;
+      padding: 10px 14px;
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
+      font-size: 0.84rem;
+      color: #444;
+      line-height: 1.45;
+    }
+    .example ul { margin: 6px 0; padding-left: 1.2rem; }
     table { border-collapse: collapse; font-size: 0.85rem; width: 100%; max-width: 1000px; }
     th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: right; }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
     th { background: #222; color: #fff; }
+    th.norm { max-width: 7.5rem; white-space: normal; line-height: 1.2; }
     tr.section td { background: #eee; font-weight: 600; text-align: left; }
     tr.vanilla td { background: #e8f5f1; font-weight: 600; }
     .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1000px; }
@@ -24,14 +49,36 @@
 </head>
 <body>
   <h1>HiPrune Family — google/gemma-4-e4b-it</h1>
-  <p>MME is perception+cognition. Average is mean relative to Vanilla. † HiPrune++ effective keep is higher (additive text tokens). POPE is a balanced subset. <b>Bold</b> = best within each retention block (ties bolded).</p>
+  <p>MME is perception+cognition. † HiPrune++ effective keep is higher (additive text tokens). POPE is a balanced subset. <b>Bold</b> = best within each retention block (ties bolded).</p>
 
   <h2>Results table</h2>
+
+  <div class="note">
+    <strong>About the last column:</strong>
+    <code>100.0%</code> for Vanilla does <em>not</em> mean the model scored 100% accuracy on the benchmarks.
+    It means Vanilla is the <strong>100% reference level</strong> for normalized performance.
+    For each benchmark, the pruned score is divided by the Vanilla score; those six ratios are then averaged.
+    So Vanilla is automatically 100% (each score divided by itself).
+    Scores in <strong>Mean normalized score (%)</strong> are normalized to the unpruned model on each benchmark before averaging.
+  </div>
+
+  <div class="example">
+    <strong>Example — HyDART at 14% retention:</strong>
+    MMB 71.9/79.6 ≈ 90.3%,
+    MME 1321/1871 ≈ 70.6%,
+    POPE 82.3/86.9 ≈ 94.7%,
+    SQA 76.9/78.4 ≈ 98.1%,
+    TextVQA 45.7/68.4 ≈ 66.8%,
+    VizWiz 56.1/58.1 ≈ 96.6%.
+    Mean ≈ (90.3+70.6+94.7+98.1+66.8+96.6)/6 ≈ <b>86.2%</b>.
+  </div>
+
   <table>
     <thead>
       <tr>
         <th>Method</th><th>Keep</th><th>MMB</th><th>MME</th>
-        <th>POPE</th><th>SQA</th><th>TextVQA</th><th>VizWiz</th><th>Average</th>
+        <th>POPE</th><th>SQA</th><th>TextVQA</th><th>VizWiz</th>
+        <th class="norm">Mean normalized score (%)</th>
       </tr>
     </thead>
     <tbody>
